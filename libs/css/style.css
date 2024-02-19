@@ -1,0 +1,96 @@
+.title-color {
+    color: #3399ff;
+}
+
+.success {
+    color: #009933;
+}
+
+.error {
+    color: #ff0000;
+}
+
+.message {
+    text-align: center !important;
+}
+
+.message {
+    color: black; /* Default color */
+}
+
+.message.error {
+    color: red;
+}
+
+.message.success {
+    color: green;
+}
+
+footer {
+    text-align: center;
+}
+
+.link-color a {
+    color: #002266;
+    text-decoration: none;
+}
+
+.btn_tabela a {
+    color: #FFF;
+    text-decoration: none;
+}
+
+#messageUnos {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.form_separator {
+    height: 2px;
+    margin-top: 20px;
+}
+
+#tabela_glasaca {
+    font-size: 12px;
+    table-layout: auto !important;
+}
+
+.btn_tabela a:hover {
+    color: #f2f2f2;
+}
+
+.navigacija, .btn_tabela_sep {
+    width: fit-content;
+}
+
+.btn_tabela_sep {
+    margin: 0 auto;
+}
+
+thead th {
+    border: 1px solid #b3e0ff;
+}
+tbody tr td {
+    border-right: 1px solid #b3e0ff;
+    border-left: 1px solid #b3e0ff;
+}
+
+.fas {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+#tabela_glasaca td:first-child, #tabela_poverenika td:first-child {
+    visibility: hidden;
+}
+
+/* Custom CSS to center the tabs */
+.nav-tabs {
+    justify-content: center;
+}
+
+
+
+
+
+

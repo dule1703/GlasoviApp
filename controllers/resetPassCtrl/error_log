@@ -1,0 +1,240 @@
+[20-Jul-2023 20:42:09 Europe/Belgrade] PHP Fatal error:  Uncaught TypeError: preg_match(): Argument #2 ($subject) must be of type string, stdClass given in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:84
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(84): preg_match()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(27): DBBroker->checkEmail()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(56): ResetPassCtrl->resetPass()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 84
+[20-Jul-2023 20:43:20 Europe/Belgrade] PHP Fatal error:  Uncaught TypeError: preg_match(): Argument #2 ($subject) must be of type string, stdClass given in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:84
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(84): preg_match()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(27): DBBroker->checkEmail()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(56): ResetPassCtrl->resetPass()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 84
+[20-Jul-2023 22:39:02 Europe/Belgrade] PHP Deprecated:  json_decode(): Passing null to parameter #1 ($json) of type string is deprecated in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 30
+[20-Jul-2023 22:40:45 Europe/Belgrade] PHP Deprecated:  json_decode(): Passing null to parameter #1 ($json) of type string is deprecated in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 30
+[20-Jul-2023 22:41:14 Europe/Belgrade] PHP Deprecated:  json_decode(): Passing null to parameter #1 ($json) of type string is deprecated in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 30
+[20-Jul-2023 22:46:28 Europe/Belgrade] PHP Fatal error:  Uncaught Error: Cannot use object of type stdClass as array in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php:35
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(57): ResetPassCtrl->resetPass()
+#1 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 35
+[20-Jul-2023 22:47:44 Europe/Belgrade] PHP Warning:  Undefined array key "username" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 647
+[20-Jul-2023 22:47:44 Europe/Belgrade] PHP Warning:  Undefined variable $id in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 659
+[20-Jul-2023 22:50:03 Europe/Belgrade] PHP Warning:  Undefined array key "username" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 647
+[20-Jul-2023 22:51:50 Europe/Belgrade] PHP Warning:  Undefined array key "username" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 647
+[20-Jul-2023 23:29:18 Europe/Belgrade] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 7
+[20-Jul-2023 23:33:07 Europe/Belgrade] PHP Deprecated:  json_decode(): Passing null to parameter #1 ($json) of type string is deprecated in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 32
+[21-Jul-2023 13:02:01 Europe/Belgrade] PHP Warning:  require_once(../dbbroker/DBBroker.php): Failed to open stream: No such file or directory in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/reset_password.php on line 6
+[21-Jul-2023 13:02:01 Europe/Belgrade] PHP Fatal error:  Uncaught Error: Failed opening required '../dbbroker/DBBroker.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/reset_password.php:6
+Stack trace:
+#0 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/reset_password.php on line 6
+[21-Jul-2023 23:24:23 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 73
+[21-Jul-2023 23:24:23 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(74): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[21-Jul-2023 23:25:30 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 73
+[21-Jul-2023 23:25:30 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(74): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[21-Jul-2023 23:29:07 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 73
+[21-Jul-2023 23:29:07 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(74): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[21-Jul-2023 23:29:15 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 73
+[21-Jul-2023 23:29:15 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(74): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[21-Jul-2023 23:29:16 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 73
+[21-Jul-2023 23:29:16 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(74): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[21-Jul-2023 23:29:17 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 73
+[21-Jul-2023 23:29:17 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(74): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[21-Jul-2023 23:29:17 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 73
+[21-Jul-2023 23:29:17 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(74): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[21-Jul-2023 23:46:43 Europe/Belgrade] PHP Warning:  Undefined variable $response in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 101
+[21-Jul-2023 23:46:44 Europe/Belgrade] PHP Warning:  Undefined variable $response in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 101
+[21-Jul-2023 23:46:45 Europe/Belgrade] PHP Warning:  Undefined variable $response in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 101
+[21-Jul-2023 23:46:45 Europe/Belgrade] PHP Warning:  Undefined variable $response in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 101
+[21-Jul-2023 23:46:46 Europe/Belgrade] PHP Warning:  Undefined variable $response in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 101
+[21-Jul-2023 23:46:46 Europe/Belgrade] PHP Warning:  Undefined variable $response in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 101
+[21-Jul-2023 23:46:47 Europe/Belgrade] PHP Warning:  Undefined variable $response in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 101
+[21-Jul-2023 23:46:48 Europe/Belgrade] PHP Warning:  Undefined variable $response in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 101
+[21-Jul-2023 23:47:46 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[21-Jul-2023 23:47:46 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(94): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[22-Jul-2023 13:20:46 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 13:20:47 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(94): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[22-Jul-2023 13:27:04 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 13:27:04 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(94): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[22-Jul-2023 13:31:53 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 13:31:53 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(94): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[22-Jul-2023 13:33:57 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 13:33:57 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(94): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[22-Jul-2023 13:37:11 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 13:37:11 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(94): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[22-Jul-2023 13:38:26 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:769
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(769): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(94): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 769
+[22-Jul-2023 20:12:39 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 20:12:39 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:770
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(770): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(94): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 770
+[22-Jul-2023 20:15:47 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 20:15:47 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:770
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(770): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 770
+[22-Jul-2023 20:15:59 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 20:15:59 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:770
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(770): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 770
+[22-Jul-2023 20:16:01 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 20:16:01 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:770
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(770): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 770
+[22-Jul-2023 20:22:36 Europe/Belgrade] PHP Warning:  Attempt to read property "sendData" on null in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 26
+[22-Jul-2023 20:22:36 Europe/Belgrade] PHP Warning:  Attempt to read property "email" on null in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 26
+[22-Jul-2023 20:22:36 Europe/Belgrade] PHP Deprecated:  preg_match(): Passing null to parameter #2 ($subject) of type string is deprecated in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 84
+[22-Jul-2023 20:26:26 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 20:26:26 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:770
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(770): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(95): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 770
+[22-Jul-2023 20:26:44 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 70
+[22-Jul-2023 20:26:44 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:770
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(770): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(71): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(95): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 770
+[22-Jul-2023 23:38:47 Europe/Belgrade] PHP Fatal error:  Uncaught Error: mysqli object is already closed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:770
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php(770): mysqli->prepare()
+#1 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(73): DBBroker->updatePassword()
+#2 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(97): ResetPassCtrl->resetPassword()
+#3 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 770
+[23-Jul-2023 11:48:05 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 72
+[23-Jul-2023 11:49:32 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 72
+[24-Jul-2023 13:32:26 Europe/Belgrade] PHP Warning:  Undefined variable $username in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 45
+[24-Jul-2023 13:32:26 Europe/Belgrade] PHP Warning:  Undefined variable $email in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 45
+[24-Jul-2023 13:32:26 Europe/Belgrade] PHP Warning:  Trying to access array offset on value of type null in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 48
+[24-Jul-2023 13:33:34 Europe/Belgrade] PHP Warning:  Undefined variable $email in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 45
+[24-Jul-2023 13:33:34 Europe/Belgrade] PHP Warning:  Trying to access array offset on value of type null in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 48
+[24-Jul-2023 13:34:02 Europe/Belgrade] PHP Warning:  Undefined variable $email in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 45
+[24-Jul-2023 13:34:02 Europe/Belgrade] PHP Warning:  Trying to access array offset on value of type null in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 48
+[24-Jul-2023 13:42:59 Europe/Belgrade] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function ResetPassCtrl::checkUsernameEmail(), 0 passed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 147 and exactly 1 expected in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php:19
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(147): ResetPassCtrl->checkUsernameEmail()
+#1 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 19
+[24-Jul-2023 13:43:01 Europe/Belgrade] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function ResetPassCtrl::checkUsernameEmail(), 0 passed in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 147 and exactly 1 expected in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php:19
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(147): ResetPassCtrl->checkUsernameEmail()
+#1 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 19
+[24-Jul-2023 14:11:51 Europe/Belgrade] PHP Warning:  Undefined variable $username in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 50
+[24-Jul-2023 14:11:51 Europe/Belgrade] PHP Warning:  Undefined variable $email in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 50
+[24-Jul-2023 14:27:52 Europe/Belgrade] PHP Fatal error:  Uncaught Error: Call to undefined method DBBroker::checkUserEmail() in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php:872
+Stack trace:
+#0 /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php(7): require_once()
+#1 {main}
+  thrown in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/dbbroker/DBBroker.php on line 872
+[27-Jul-2023 13:57:49 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 84
+[27-Jul-2023 13:58:21 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 84
+[27-Jul-2023 14:00:52 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 84
+[27-Jul-2023 14:01:16 Europe/Belgrade] PHP Warning:  Undefined array key "checkUser" in /home/ddweba/VoicesApp-OOP-PHP-VanillaJS-BS5.ddwebapps.com/controllers/resetPassCtrl/ResetPassCtrl.php on line 84
