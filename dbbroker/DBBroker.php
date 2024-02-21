@@ -9,9 +9,9 @@ session_start();
 class DBBroker {
 
     private $servername = "localhost";
-    private $username = "ddweba_voicesDBpom";
+    private $username = "ddweba_voicesDB";
     private $password = "voices888";
-    private $dbname = "ddweba_voicesDBpom";
+    private $dbname = "ddweba_voicesDB";
     private $conn;
 
     function __construct() {
@@ -1388,7 +1388,7 @@ class DBBroker {
 }
 
 //$test = new DBBroker();
-//$test->deleteOkrug(30);
+//$test->deleteOkrug(33);
 //$test->ubaciOkrugIPoverenistva("Тест округ");
 //$test->slobodneOpstine();
 //$test->updatePoverenik(3, "Катарина", "Роквић", "2343234532388", "Јована Дучића 8", "3532888", "Дом омладине 8", "dusko8.drljaca@consultech.rs", "02/07/1998");

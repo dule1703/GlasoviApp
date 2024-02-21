@@ -1,7 +1,7 @@
 <?php
 
 include 'views/header.php';
-?>    
+?>   
 <title>Login page</title>
 
 </head>

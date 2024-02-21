@@ -1714,7 +1714,7 @@ if (selectElement) {
         }
     });
 
-// Ažuriranje output-a
+// Ažuriranje output-a, izabranih opština i dugmića za brisanje pored njih
     const updateOutput = () => {
         outputDiv.innerHTML = "";
         console.log(selectedOptions);
@@ -1820,5 +1820,47 @@ if (selectElement) {
         messageElement.innerHTML = `<p style="color: ${color};">${message}</p>`;
     }
 }
+
+
+const deleteOkrug = async (id) => {
+    try {
+        const url = '/controllers/adminController/AdminCtrl.php';
+        const okrugID = document.getElementById('okrugDelete').value;
+        
+        const requestBody = {
+            action: 'deleteOkrug',
+            sendData: {
+                id: okrugID
+            }
+        };
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        const result = await response.json();
+        console.log(result); // Handle the response accordingly, if needed
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+
+const dugmeDeleteOkrug = document.getElementById('deleteOkrugBtn');
+if (dugmeDeleteOkrug){
+    dugmeDeleteOkrug.addEventListener('click', () => {
+    const confirmed = window.confirm('Ako izbrišete okrug biće izbrisani svi poverenici i glasači koje je on uneo?');
+    if (confirmed) {
+        deleteOkrug(); // Call the deleteOkrug function if the user confirms
+    }
+    });
+}
+
+
+
+
 
 

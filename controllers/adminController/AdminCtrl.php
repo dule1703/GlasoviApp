@@ -82,6 +82,11 @@ class AdminCtrl {
         $nizPov = $data->sendData->niz;
         $this->newDBB->ubaciOkrugIPoverenistva($okrug, $nizPov);
     }
+    
+     public function izbrisiOkrug($data){
+        $id = $data->sendData->id;        
+        $this->newDBB->deleteOkrug($id);
+    }
 
 }
 
@@ -115,6 +120,9 @@ if (!empty($data)) {
             break;
         case 'sacuvajOkrug':
             $admin->ubaciOkrugIPoverenistava($data);
+            break;
+        case 'deleteOkrug':
+            $admin->izbrisiOkrug($data);
             break;
 
         default:

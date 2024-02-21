@@ -195,7 +195,7 @@ include './header.php';
                                     <div class="row">
                                         <div class="col-lg-4 col-sm-4"></div>
                                         <div class="col-lg-4 col-sm-4">
-                                            <button class="btn btn-danger mt-5 mb-2">Избришите округ</button>
+                                            <button id="deleteOkrugBtn" class="btn btn-danger mt-5 mb-2">Избришите округ</button>
                                         </div>
                                         <div class="col-lg-4 col-sm-4"></div>
                                     </div>
