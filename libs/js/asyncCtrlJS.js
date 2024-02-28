@@ -1211,8 +1211,8 @@ const ucitajOkruge = async() => {
     try {
         const okrug = document.getElementById("okrug");
         const okrugDelete = document.getElementById('okrugDelete');
-        
-        
+
+
         const url = '/controllers/adminController/AdminCtrl.php';
         const requestBody = {
             action: 'ucitajOkruge'
@@ -1229,17 +1229,17 @@ const ucitajOkruge = async() => {
         const fetchData = await response.json();
         const nizData = fetchData.niz;
 
-        
+
         nizData.forEach(element => {
             const option = document.createElement('option');
             option.value = element.id;
             option.textContent = element.naziv_regiona;
-            if(okrug){
+            if (okrug) {
                 okrug.appendChild(option);
-            }else if(okrugDelete){
+            } else if (okrugDelete) {
                 okrugDelete.appendChild(option);
             }
-            
+
         });
 
     } catch (error) {
@@ -1619,15 +1619,14 @@ const deleteRowPov = async (button) => {
     const firstCell = row.querySelector('td:first-child');
     const id = firstCell.textContent;
 
-    if (window.confirm('Да ли желите да избришете ове податке?')) {
-        // Proceed with the deletion if the user confirms
-        if (id !== '1' && id !== '2') {
+    if (id !== '1' && id !== '2') {        
+        if (window.confirm('Да ли желите да избришете ове податке?')) {           
             await deletePoverenik(id);
-            row.remove(); // Remove the row from the table after successful deletion
+            row.remove(); 
             ucitajTabeluPov();
-        } else {
-            alert('Не можете брисати налог нивоа Superadmin или Admin');
         }
+    } else {        
+        alert('Не можете брисати налог нивоа Superadmin или Admin');
     }
 };
 
@@ -1767,7 +1766,7 @@ if (selectElement) {
             $('#confirmationModalPoverenistvo').modal('show');
         } else {
             showMessage("Молимо изаберите бар једно повереништво.", "red");
-            
+
             setTimeout(() => {
                 showMessage("");
             }, 4000);
@@ -1777,7 +1776,7 @@ if (selectElement) {
     const confirmButtonPov = document.getElementById("confirmButtonPov");
     confirmButtonPov.addEventListener("click", async (e) => {
         try {
-             e.preventDefault();
+            e.preventDefault();
             // Your asynchronous code (fetch) here
             const url = '/controllers/adminController/AdminCtrl.php';
             const nazivOkruga = document.getElementById("naziv_okruga");
@@ -1826,7 +1825,7 @@ const deleteOkrug = async (id) => {
     try {
         const url = '/controllers/adminController/AdminCtrl.php';
         const okrugID = document.getElementById('okrugDelete').value;
-        
+
         const requestBody = {
             action: 'deleteOkrug',
             sendData: {
@@ -1850,12 +1849,12 @@ const deleteOkrug = async (id) => {
 };
 
 const dugmeDeleteOkrug = document.getElementById('deleteOkrugBtn');
-if (dugmeDeleteOkrug){
+if (dugmeDeleteOkrug) {
     dugmeDeleteOkrug.addEventListener('click', () => {
-    const confirmed = window.confirm('Ako izbrišete okrug biće izbrisani svi poverenici i glasači koje je on uneo?');
-    if (confirmed) {
-        deleteOkrug(); // Call the deleteOkrug function if the user confirms
-    }
+        const confirmed = window.confirm('Ako izbrišete okrug biće izbrisani svi poverenici i glasači koje je on uneo?');
+        if (confirmed) {
+            deleteOkrug(); // Call the deleteOkrug function if the user confirms
+        }
     });
 }
 
