@@ -1,12 +1,2 @@
-# Ignore files ending with .log
-*.log
-
-# Ignore directories named "logs"
-logs/
-
-# Ignore all files in the "temp" directory
-temp/*
-
-# Ignore a specific file
-secret.txt
+nbproject/
 error_log
