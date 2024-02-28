@@ -1,2 +1,2 @@
-nbproject/
 **/error_log
+nbproject/
