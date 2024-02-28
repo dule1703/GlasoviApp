@@ -103,7 +103,6 @@ include './header.php';
 
 
             </div>
-
  
             <!-- БРИСАЊЕ ПОДАТАКА -->
             <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="delete-tab">               
