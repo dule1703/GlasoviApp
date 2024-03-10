@@ -22,25 +22,23 @@ class ResetPassCtrl {
         $_SESSION["checkUser"] = $username;
     }
 
-    public function checkAndInsertEmail($data) {
+    public function checkEmailByUsername($data) {
         $userEmail = $data->sendData->email;
         $checkUser = $_SESSION["checkUser"];
-        // Start output buffering to capture the echo from checkEmail() function      
-        $this->newDBB->checkAndInsertEmail($userEmail, $checkUser);                  
+//        $userEmail = 'contact@ddwebapps.com';
+//        $checkUser = 'Superadmin';
+
+        $this->newDBB->checkEmailByUsername($userEmail, $checkUser);
     }
     
-    public function existEmail(){
-        $checkUser = $_SESSION["checkUser"];
-        $this->newDBB->existEmail($checkUser);
-    }
-
     public function emailVerification($data) {
         $userEmail = $data->sendData->email;
         $checkUser = $_SESSION["checkUser"];
-        //check is mail exist
+
+        //Proverava da li postoji email koji odgovara ulogovanom user-u
         // Start output buffering to capture the echo from checkEmail() function
         ob_start();
-        $this->newDBB->checkUsernameEmail($checkUser, $userEmail);
+        $this->checkEmailByUsername($data);
         $jsonString = ob_get_clean(); // Capture the output and clean the buffer        
 
         $emailData = json_decode($jsonString, true);
@@ -49,27 +47,37 @@ class ResetPassCtrl {
             echo "Error decoding JSON: " . json_last_error_msg();
         } else {
             $status = $emailData['status'];
-            if ($status === "existing") {
-                $userId = $this->newDBB->getUserLoginId($checkUser);
-                $verificatationCode = $this->newDBB->generateVerificationCode();
-                if ($verificatationCode) {
+            
+            if ($status === "exist") {
+                $userLoginId = $this->newDBB->getUserLoginId($checkUser);             
+                $verificationCode = $this->newDBB->generateVerificationCode();
+               
+                if ($verificationCode) {
                     ob_start();
-                    $this->newDBB->storeVerificationToken($userId, $verificatationCode);
+                    $this->newDBB->storeVerificationToken($userLoginId, $verificationCode);
+
                     $jsonString2 = ob_get_clean();
                     $verificationMsg = json_decode($jsonString2, true);
-                    $status = $verificationMsg["status"];
-                    if ($status === "success") {
-                        $this->newDBB->sendVerificationEmail($userEmail, $verificatationCode);
-                        echo json_encode(["status" => "success", "message" => "Успешно креиран токен, проверите ваш мејл!"]);
-                        exit();
-                    }
+                    if ($verificationMsg !== null) {
+                        $status = $verificationMsg["status"];
+                        if ($status === "success") {
+                            $this->newDBB->sendVerificationEmail($userEmail, $checkUser, $verificationCode);
+                            echo json_encode(["status" => "success", "message" => "Uspešno uskladišten token, proverite vaš email!"]);
+                            exit();
+                        } else {
+                            echo json_encode(["status" => "fail", "message" => "Neuspešno uskladišten token!"]);
+                        }
+                    } else {
+                        // Handle the case when $verificationMsg is null
+                        echo json_encode(["status" => "fail", "message" => "Verifikaciona poruka je 'null'"]);
+                    }                    
                 }
-            }else {
-                echo json_encode(["status" => "non exist", "message" => "Email је заузет или не постоји у бази!"]);
+            } else {
+                echo json_encode(["status" => "non exist", "message" => "Pogrešan ili nepostojeći mejl!"]);
             }
-            
         }
     }
+
 
     public function resetPassword($data) {
 
@@ -79,16 +87,15 @@ class ResetPassCtrl {
         // print_r($token);
 
         $isValidToken = $this->newDBB->validateVerificationToken($token);
-
-        if ($isValidToken) {
-            $username = $_SESSION["checkUser"];
+        $username = $_SESSION["checkUser"];
+        if ($isValidToken && $username != null) {                     
             if ($this->newDBB->updatePassword($username, $newPassword)) {
-                echo json_encode(["status" => "success", "message" => "Ваша шифра је успешно ресетована. Можете се улоговати са новом шифром."]);
+                echo json_encode(["status" => "success", "message" => "Vasa šifra je uspešno resetovana."]);
             } else {
-                echo json_encode(["status" => "fail", "message" => "Неуспешно ажурирано"]);
+                echo json_encode(["status" => "fail", "message" => "Neuspešno ažurirano"]);
             }
         } else {
-            echo json_encode(["status" => "error", "message" => "Невалидан токен"]);
+            echo json_encode(["status" => "error", "message" => "Nevalidan token ili korisničko ime"]);
         }
     }
 
@@ -98,11 +105,8 @@ if (!empty($data)) {
     $rpc = new ResetPassCtrl();
 
     switch ($data->action) {
-        case 'existEmail':
-            $rpc->existEmail();
-            break;
-        case 'insertEmail':
-            $rpc->checkAndInsertEmail($data);
+        case 'checkEmailByUsername':
+            $rpc->checkEmailByUsername($data);
             break;
         case 'checkUsername':
             $rpc->checkUsername($data);
@@ -118,4 +122,7 @@ if (!empty($data)) {
     }
 }
 //$rpc = new ResetPassCtrl();
+//$pomVC = $rpc->newDBB->generateVerificationCode();
+//$rpc->newDBB->storeVerificationToken(1, $pomVC);
+//$rpc->emailVerification();
 //$rpc->resetPassword($data);

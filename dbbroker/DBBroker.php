@@ -37,7 +37,7 @@ class DBBroker {
         try {
             $conn = $this->conn;
 
-            $sql = "SELECT username, password FROM poverenik_login_temp WHERE username = ?";
+            $sql = "SELECT username, password FROM poverenik_login WHERE username = ?";
             $stmt = $conn->prepare($sql);
             if ($stmt === false) {
                 throw new Exception("Failed to prepare the SQL query.");
@@ -261,8 +261,8 @@ class DBBroker {
     public function insertGlasac($ime, $prezime, $jmbg, $adresa, $telefon, $biraliste, $email, $datum_rodj, $temp_nosilac_glasova_id, $nosilac_glasova_ime, $opstina) {
         $conn = $this->conn;
 
-        $username = $_SESSION["username"];
-
+        //$username = $_SESSION["username"];
+        $username = 'Вучитрн';
         //vraćanje šifre povereništva za izabranu opštinu
         $sqlUpit = "SELECT DISTINCT pov.id, op.naziv_opstine FROM poverenistvo pov
                 INNER JOIN opstine op ON op.id = pov.opstina_id
@@ -369,11 +369,63 @@ class DBBroker {
         }
     }
 
+    public function getNivoPovByGlasacId($id) {
+        try {
+            $conn = $this->conn;
+            $username = $_SESSION["username"];
+            //$username = 'Vitina';
+            //Upit gde na osnovu username-a dobijamo nivo poverenika koji je ulogovan
+            $nivo_pov_Pom1 = null;
+            $sqlUpitPom1 = "SELECT pov.poverenik_nivo_id FROM poverenik pov 
+                                                INNER JOIN poverenik_nivo pn ON pn.id = pov.poverenik_nivo_id
+                                                INNER JOIN poverenik_login pl ON pl.id = pov.poverenik_login_id
+                                                WHERE pl.username = ?";
+
+            $stmtPom1 = $conn->prepare($sqlUpitPom1);
+            $stmtPom1->bind_param("s", $username);
+            $stmtPom1->execute();
+            $stmtPom1->bind_result($npov1);
+            while ($stmtPom1->fetch()) {
+                $nivo_pov_Pom1 = $npov1;
+            }
+            //var_dump($nivo_pov_Pom1);
+
+            $stmtPom1->close();
+
+            //Upit gde dobijamo nivo poverenika nad kojim se vrši ažuriranje na osnovu prosleđenog ID-ija glasača
+            $nivo_pov_Pom2 = null;
+            $sqlUpitPom2 = "SELECT pov.poverenik_nivo_id FROM poverenik pov INNER JOIN poverenistvo p ON p.id = pov.poverenistvo_id
+                                                                    INNER JOIN glasac gl ON gl.poverenistvo_id = p.id
+                                                                    WHERE gl.id = ? AND pov.email = gl.email";
+            $stmtPom2 = $conn->prepare($sqlUpitPom2);
+            $stmtPom2->bind_param("i", $id);
+            $stmtPom2->execute();
+            $stmtPom2->bind_result($npov2);
+
+            while ($stmtPom2->fetch()) {
+                $nivo_pov_Pom2 = $npov2;
+            }
+            //var_dump($nivo_pov_Pom2);
+            $stmtPom2->close();
+
+            //Ako je nivo poverenika koji ažurira manji onda ne može da ažurira podatke poverenika sa većim nivoom
+            //Opštinski poverenik(administrator) ne može da ažurira podatke okružnog poverenika
+            if ($nivo_pov_Pom1 === 3 && $nivo_pov_Pom2 === 4) {
+                return false;
+            }
+            return true;
+        } catch (Exception $e) {
+            $message = "Грешка на серверу: " . $e->getMessage();
+            echo json_encode(["status" => "error", "message" => $message]);
+        }
+    }
+
     public function loadTable() {
         try {
             $conn = $this->conn;
 
             $username = $_SESSION["username"];
+            //$username = 'Test Okrug';
             $opstinaOkrug = $this->latinToCyrillic($username);
 
             $nizOpstina = array();
@@ -436,8 +488,15 @@ class DBBroker {
                         'nosilac_glasova_ime' => $nosilac_glasova_ime
                     );
                     array_push($nizOpstina, $item);
+                }    
+                //echo json_encode($nizOpstina). "<br><br><br>";
+                foreach ($nizOpstina as $key => $item) {
+                   $pom = $this->getNivoPovByGlasacId($item['id']);
+                   if($pom === false){
+                       unset($nizOpstina[$key]);
+                   }
                 }
-
+                $nizOpstina = array_values($nizOpstina);
                 echo json_encode($nizOpstina);
             } else {
                 throw new Exception("Database query failed");
@@ -453,6 +512,7 @@ class DBBroker {
     public function getGlasacById($id) {
         try {
             $conn = $this->conn;
+
             $sqlUpit = "SELECT gl.ime, gl.prezime, gl.email, gl.jmbg, gl.adresa, gl.telefon, gl.biraliste, gl.datum_rodj, op.naziv_opstine, ok.naziv_regiona, gl.datum_unosa, ng.nosilac_glasova_tip, gl.nosilac_glasova_ime 
                             FROM opstine op		
                             INNER JOIN poverenistvo pov ON pov.opstina_id = op.id
@@ -516,9 +576,9 @@ class DBBroker {
             $stmt->bind_param("i", $id);
             $res = $stmt->execute();
             if ($res) {
-                echo json_encode(["status" => "success", "message" => "Успешно избрисан гласач!"]);
+                echo json_encode(["status" => "success", "message" => "Uspešno izbrisan glasač!"]);
             } else {
-                echo json_encode(["status" => "fail", "message" => "Неуспешно брисање!"]);
+                echo json_encode(["status" => "fail", "message" => "Neuspešno brisanje!"]);
             }
         } catch (Exception $e) {
             echo json_encode(["status" => "error", "message" => "Грешка: " . $e->getMessage()]);
@@ -674,155 +734,83 @@ class DBBroker {
             $stmt->execute();
             $stmt->bind_result($username);
             if ($stmt->fetch()) {
-                // Username exists in the database
-                echo json_encode(["status" => "success", "message" => "Корисничко име постоји: " . $username]);
+                echo json_encode(["status" => "success", "message" => "Uneto korisničko ime postoji: " . $username]);
             } else {
-                // Username does not exist in the database
-                echo json_encode(["status" => "wrong", "message" => "Корисничко име не постоји!"]);
+                echo json_encode(["status" => "wrong", "message" => "Korisničko ime ne postoji!"]);
             }
         } catch (Exception $e) {
             echo json_encode(["status" => "fail", "message" => $e->getMessage()]);
         }
     }
 
-    public function checkAndInsertEmail($email, $username) {
-        $conn = $this->conn;
-
-        // Odsecanje svih znakova osim brojeva
-        $emailCheck = $email;
-        $pattern = "/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/";
-
-        if (!preg_match($pattern, $emailCheck)) {
-            echo json_encode(["status" => "invalid email", "message" => "Унели сте невалидан мејл!"]);
-        } else {
-            try {
-                $conn->autocommit(false); // Start a transaction
-                // Check if the pair of username and email exists in the database
-                $sqlUpit = "SELECT email FROM poverenik_login WHERE username = ?";
-                $stmt = $conn->prepare($sqlUpit);
-                $stmt->bind_param("s", $username);
-                $stmt->execute();
-                $stmt->bind_result($existingEmail);
-                $stmt->fetch();
-                $stmt->close(); // Close the first statement before executing the second one
-
-                if ($existingEmail !== null) {
-                    // The username exists, now check if the email exists
-                    $sqlUpit2 = "SELECT email FROM poverenik_login WHERE email = ?";
-                    $stmt2 = $conn->prepare($sqlUpit2);
-                    $stmt2->bind_param("s", $emailCheck);
-                    $stmt2->execute();
-                    $stmt2->bind_result($fetchedEmail);
-                    $stmt2->fetch();
-                    $stmt2->close(); // Close the second statement before proceeding
-
-                    if (!empty($fetchedEmail)) {
-                        // The pair of username and email already exists in the database
-                        echo json_encode(["status" => "bussy", "message" => "Овај мејл је заузет!"]);
-                    } else {
-                        // Update the email in the database only if it's empty or null
-                        if ($existingEmail === null || $existingEmail === "") {
-                            $sqlUpit3 = "UPDATE poverenik_login SET email = ? WHERE username = ?";
-                            $stmt3 = $conn->prepare($sqlUpit3);
-                            $stmt3->bind_param("ss", $emailCheck, $username);
-                            $stmt3->execute();
-                            $stmt3->close(); // Close the third statement after the update
-                            echo json_encode(["status" => "existing", "message" => "Успешно сачувано!"]);
-                            $conn->commit(); // Commit the transaction
-                            $conn->autocommit(true); // Turn autocommit back on
-                        } else {
-                            // Email is not empty, and the pair does not exist
-                            echo json_encode(["status" => "not found", "message" => "Пар username/email не постоји."]);
-                        }
-                    }
-                } else {
-                    // The username does not exist
-                    echo json_encode(["status" => "not found", "message" => "Пар username/email не постоји."]);
-                }
-            } catch (Exception $e) {
-                $conn->rollback(); // Rollback the transaction if an error occurred
-                $conn->autocommit(true); // Turn autocommit back on
-                echo json_encode(["status" => "error", "message" => "Грешка приликом приступа бази података: " . $e->getMessage()]);
-            }
-        }
-    }
-
-    function existEmail($username) {
+    public function checkEmailByUsername($email, $username) {
         try {
             $conn = $this->conn;
-            $sqlUpit = "SELECT email FROM poverenik_login WHERE username = ?";
+
+            // Validacija email adrese
+            $pattern = "/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/";
+            if (!preg_match($pattern, $email)) {
+                echo json_encode(["status" => "invalid email", "message" => "Uneli ste nevalidan mejl!"]);
+                return;
+            }
+
+            $conn->autocommit(false);
+
+            // Provera da li parovi username/email postoje u bazi
+            $sqlUpit = "SELECT pov.email 
+                    FROM poverenik pov 
+                        INNER JOIN poverenik_login pl ON pov.poverenik_login_id = pl.id
+                    WHERE pov.email = ? AND pl.username = ?";
             $stmt = $conn->prepare($sqlUpit);
-            $stmt->bind_param("s", $username);
+            $stmt->bind_param("ss", $email, $username);
             $stmt->execute();
-            $stmt->bind_result($email);
-
+            $stmt->bind_result($existingEmail);
             $stmt->fetch();
+            $stmt->close();
 
-            if ($email !== "") {
-                echo json_encode(["status" => "existing", "message" => "Мејл постоји!"]);
+            if ($existingEmail) {
+                echo json_encode(["status" => "exist", "message" => "Email postoji!"]);
             } else {
-                echo json_encode(["status" => "empty", "message" => "Мејл није унешен!"]);
+                echo json_encode(["status" => "not found", "message" => "Email za uneto korisničko ime ne postoji."]);
             }
+
+            $conn->commit();
         } catch (Exception $e) {
-            
+            $conn->rollback();
+            echo json_encode(["status" => "error", "message" => "Greška prilikom pristupa bazi: " . $e->getMessage()]);
         }
     }
 
-    function checkUsernameEmail($username, $email) {
-        $conn = $this->conn;
-
-        // Odsecanje svih znakova osim brojeva
-        $emailCheck = $email;
-        $pattern = "/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/";
-
-        if (!preg_match($pattern, $emailCheck)) {
-            echo json_encode(["status" => "invalid email", "message" => "Унели сте невалидан мејл!"]);
-        } else {
-
-            try {
-                $sqlUpit = "SELECT email FROM poverenik_login WHERE email = ? AND username = ?";
-                $stmt = $conn->prepare($sqlUpit);
-                $stmt->bind_param("ss", $emailCheck, $username);
-                $stmt->execute();
-                $stmt->store_result();
-
-                if ($stmt->num_rows > 0) {
-                    echo json_encode(["status" => "existing", "message" => "Овај мејл је заузет!"]);
-                } else {
-                    echo json_encode(["status" => "wrong", "message" => "Непостојећи мејл!"]);
-                }
-            } catch (Exception $e) {
-                echo json_encode(["status" => "error", "message" => "Грешка приликом приступа бази података: " . $e->getMessage()]);
-            }
-        }
-    }
-
-    // Generate a Unique Verification Code/Token
+    // Generisanje jedinstvenog verifikacionog Code/Token-a
     function generateVerificationCode() {
-        $tokenLength = 32; // Length of the verification code/token
+        $tokenLength = 32;
         $verificationCode = bin2hex(random_bytes($tokenLength));
 
         return $verificationCode;
     }
 
-    function storeVerificationToken($userId, $verificationCode) {
+    function storeVerificationToken($userLoginId, $verificationCode) {
         try {
-            $expirationTime = date('Y-m-d H:i:s', strtotime('+5 minutes'));
+            $expirationTime = date('Y-m-d H:i:s', strtotime('+10 minutes'));
             $conn = $this->conn;
+            $conn->autocommit(false);
 
-            // Prepare and execute the SQL query to insert the data into the verification_tokens table
-            $stmt = $conn->prepare("INSERT INTO verification_tokens (user_id, token, expiration_time) VALUES (?, ?, ?)");
-            $stmt->bind_param("iss", $userId, $verificationCode, $expirationTime);
+            // Ubacivanje podataka u verification_tokens tabelu
+            $stmt = $conn->prepare("INSERT INTO verification_tokens (user_login_id, token, expiration_time) VALUES (?, ?, ?)");
+            $stmt->bind_param("iss", $userLoginId, $verificationCode, $expirationTime);
             $stmt->execute();
             $stmt->close();
-            echo json_encode(["status" => "success", "message" => "Успешно сачуван токен у базу података."]);
+            echo json_encode(["status" => "success", "message" => "Uspešno sačuvan token u bazi podataka"]);
+
+            $conn->commit();
         } catch (Exception $e) {
+            $conn->rollback();
             echo json_encode(["status" => "fail", "message" => $e->getMessage()]);
         }
     }
 
-    function sendVerificationEmail($userEmail, $verificationCode) {
-        $verificationLink = "https://voicesapp-oop-php-vanillajs-bs5.ddwebapps.com/controllers/resetPassCtrl/sendToken.php?token=" . urlencode($verificationCode);
+    function sendVerificationEmail($userEmail, $username, $verificationCode) {
+        $verificationLink = "https://voicesapp-oop-php-vanillajs-bs5.ddwebapps.com/controllers/resetPassCtrl/sendToken.php?token=" . urlencode($verificationCode) . "&username=" . urlencode($username);
         $subject = "Zahtev za resetovanje sifre";
         $message = "Kliknite na link za resetovanje sifre:\n\n<a href='$verificationLink'>Reset Password</a>";
         $headers = "From: contact@ddwebapps.com\r\n";
@@ -834,45 +822,22 @@ class DBBroker {
     function validateVerificationToken($token) {
         try {
             $conn = $this->conn;
-            // Prepare and execute the SQL query to check if the token exists and is valid
-            $stmt = $conn->prepare("SELECT user_id, expiration_time FROM verification_tokens WHERE token = ? AND expiration_time > NOW()");
+            // SQL upit za proveru da li token postoji i da li je validan
+            $stmt = $conn->prepare("SELECT user_login_id, expiration_time FROM verification_tokens WHERE token = ? AND expiration_time > NOW()");
             $stmt->bind_param("s", $token);
             $stmt->execute();
             $stmt->store_result();
 
-            // Check if a row was returned (token exists and is valid)
+            // Ako je validan token onda postoji
             $isValidToken = ($stmt->num_rows === 1);
 
-            // Close the statement and database connection
+            // Zatvaranje konekcije
             $stmt->close();
 
-            // Echo the JSON response
-            // echo json_encode(["status" => "success", "isValidToken" => $isValidToken]);
+            // Echo JSON response            
             return $isValidToken;
         } catch (Exception $e) {
             echo json_encode(["status" => "fail", "message" => $e->getMessage()]);
-        }
-    }
-
-    function getUserIdByToken($token) {
-        try {
-            $conn = $this->conn;
-            // Prepare and execute the SQL query
-            $stmt = $conn->prepare("SELECT user_id FROM verification_tokens  WHERE token = ?");
-            $stmt->bind_param("s", $token);
-            $stmt->execute();
-            $stmt->bind_result($userId);
-
-            // Fetch the result
-            $stmt->fetch();
-
-            // Close the statement and database connection
-            $stmt->close();
-
-            // Return the userId
-            return $userId;
-        } catch (Exception $e) {
-            echo json_encode(["status" => "success", "message" => $e->getMessage()]);
         }
     }
 
@@ -890,7 +855,6 @@ class DBBroker {
             return true;
             //return $res;
         } catch (Exception $e) {
-            // Handle the exception if something goes wrong during the update
             return false;
         }
     }
@@ -926,11 +890,10 @@ class DBBroker {
 
         try {
             $conn->autocommit(false); // Start a transaction
-            // Vraćanje id povereništva    
+            // Vraćanje id povereništva za unošenje Poverenika
             $sqlUpit = "SELECT DISTINCT pov.id FROM poverenistvo pov
-                            INNER JOIN opstine op ON op.id = pov.opstina_id
-                        WHERE op.naziv_opstine = ?";
-
+                        INNER JOIN opstine op ON op.id = pov.opstina_id
+                    WHERE op.naziv_opstine = ?";
             $stmt = $conn->prepare($sqlUpit);
             $stmt->bind_param("s", $opstina);
             $stmt->execute();
@@ -940,31 +903,34 @@ class DBBroker {
             }
             $stmt->close();
 
-            date_default_timezone_set("Europe/Belgrade");
-            $datum_unosa = date("d/m/Y H:i:s");
-
+            //poverenik_login_id za korisničko ime i šifru Poverenika
             $poverenik_login_id = $this->createPoverenikLogin($opstina, $okrug, $poverenik_nivo_id);
 
-            $sqlUpit = "INSERT INTO poverenik(ime, prezime, jmbg, adresa, telefon, biraliste, email, datum_rodj, poverenik_nivo_id, poverenik_login_id, poverenistvo_id)"
-                    . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt2 = $conn->prepare($sqlUpit);
+            if ($poverenik_login_id === null) {
+                $conn->rollback();
+                echo json_encode(["status" => "fail", "message" => "Грешка при креирању корисничког налога за Повереника. Корисничко име већ постоји."]);
+                exit(); // Stop further execution
+            }
 
+            //Ubacivanje Poverenika
+            $sqlUpit = "INSERT INTO poverenik(ime, prezime, jmbg, adresa, telefon, biraliste, email, datum_rodj, poverenik_nivo_id, poverenik_login_id, poverenistvo_id)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt2 = $conn->prepare($sqlUpit);
             if (!$stmt2) {
                 throw new Exception("Error in preparing the SQL statement.");
             }
-
             $stmt2->bind_param("ssssssssiii", $ime, $prezime, $jmbg, $adresa, $telefon, $biraliste, $email, $datum_rodj, $poverenik_nivo_id, $poverenik_login_id, $poverenistvo_id);
-
             $res = $stmt2->execute();
             $stmt2->close();
-            //dobijanje korisničkog imena na osnovu id 
-            $sqlUpit1 = "SELECT username FROM poverenik_login_temp WHERE id = ?";
+
+            //Dobijanje korisničkog imena na osnovu id iz tabele poverenik_login
+            $sqlUpit1 = "SELECT username FROM poverenik_login WHERE id = ?";
             $stmt1 = $conn->prepare($sqlUpit1);
             $stmt1->bind_param("s", $poverenik_login_id);
             $stmt1->execute();
             $stmt1->bind_result($usr);
             while ($stmt1->fetch()) {
-                //Slanje korisničkog imena na email novokreiranog poverenika
+                //Slanje email-a sa korisničkim imenom na email novokreiranog poverenika
                 $subject = "Korisničko ime";
                 $message = "Vaše korisničko ime je: " . $usr . " <br> Šifru možete promeniti na <a href='https://voicesapp-oop-php-vanillajs-bs5.ddwebapps.com/'>linku</a>";
                 $headers = "From: contact@ddwebapps.com\r\n";
@@ -975,21 +941,24 @@ class DBBroker {
             if ($res) {
                 $nosilac_glasova_id = 1;
                 $nosilac_glasova_ime = "";
-                $sqlUpit3 = "INSERT INTO glasac(ime, prezime, jmbg, adresa, poverenistvo_id, telefon, biraliste,  datum_unosa, email, datum_rodj, nosilac_glasova_id, nosilac_glasova_ime)"
-                        . "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                date_default_timezone_set("Europe/Belgrade");
+                $datum_unosa = date("d/m/Y H:i:s");
+                //Ukoliko je Poverenik uspešno unešen u tabelu poverenik ubacuje se i direktno u tabelu glasač 
+                $sqlUpit3 = "INSERT INTO glasac(ime, prezime, jmbg, adresa, poverenistvo_id, telefon, biraliste,  datum_unosa, email, datum_rodj, nosilac_glasova_id, nosilac_glasova_ime)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt3 = $conn->prepare($sqlUpit3);
                 $stmt3->bind_param("ssssisssssis", $ime, $prezime, $jmbg, $adresa, $poverenistvo_id, $telefon, $biraliste, $datum_unosa, $email, $datum_rodj, $nosilac_glasova_id, $nosilac_glasova_ime);
                 $stmt3->execute();
                 $stmt3->close();
                 $conn->commit(); // Commit the transaction
-                $conn->autocommit(true); // Turn autocommit back on
+                //$conn->autocommit(true); // Turn autocommit back on
                 echo json_encode(["status" => "uspesno", "message" => "Успешно сачувани подаци!"]);
             } else {
                 echo json_encode(["status" => "neuspesno", "message" => "Неуспешно сачувани подаци!", "error" => $stmt->error]);
             }
         } catch (Exception $e) {
-            $conn->rollback(); // Rollback the transaction if an error occurred
-            $conn->autocommit(true); // Turn autocommit back on
+            $conn->rollback();
+            // $conn->autocommit(true); // Turn autocommit back on
             echo "Error: " . $e->getMessage();
             // Log the exception details
             $errorDetails = "Exception in insertPoverenik: " . $e->getMessage();
@@ -1002,42 +971,54 @@ class DBBroker {
         $conn = $this->conn;
         try {
             $conn->autocommit(false); // Start a transaction   
-            // Validate and sanitize za ulazne vrednosti
+            // Validate and sanitize input values
             $opstina = $this->sanitizeInput($opstina);
             $okrug = $this->sanitizeInput($okrug);
-            //Korisničko ime je ime okruga ili opstine poverenika u zavisnoti da li je opštinski ili okružni poverenik             
+
+            // Determine the username based on poverenik_nivo
             if ($poverenik_nivo !== 3 && $poverenik_nivo !== 4) {
                 throw new Exception("Invalid poverenik_nivo");
             }
-            if ($poverenik_nivo === 4) {
-                $username = $this->cyrillicToLatin($okrug);
-            } else {
-                $username = $this->cyrillicToLatin($opstina);
+            $username = ($poverenik_nivo === 4) ? $this->cyrillicToLatin($okrug) : $this->cyrillicToLatin($opstina);
+
+            // Check if username already exists
+            $sqlUpit0 = "SELECT COUNT(*) FROM poverenik_login WHERE username = ?";
+            $stmt0 = $conn->prepare($sqlUpit0);
+            $stmt0->bind_param("s", $username);
+            $stmt0->execute();
+            $stmt0->bind_result($count);
+            $stmt0->fetch();
+            $stmt0->close();
+
+            if ($count > 0) {
+                return;
             }
 
-            // Šifra je ista kao korisničko ime zbog jednostavnosti. Poverenik može uvek da promeni šifru na stranici logovanja.
+            // Generate password
             $password = password_hash($username, PASSWORD_BCRYPT);
 
-            //Ubacivanje novog para username/password
-            $sqlUpit = "INSERT INTO poverenik_login_temp(username, password) VALUES(?,?)";
+            // Insert new record
+            $sqlUpit = "INSERT INTO poverenik_login(username, password) VALUES(?,?)";
             $stmt = $conn->prepare($sqlUpit);
             $stmt->bind_param("ss", $username, $password);
             $stmt->execute();
             $stmt->close();
-            //Vraćanje id koji se koristi prilikom kreiranja poverenika
-            $sqlUpit2 = "SELECT id FROM poverenik_login_temp WHERE username = ?";
+
+            // Get the ID of the inserted record
+            $sqlUpit2 = "SELECT id FROM poverenik_login WHERE username = ?";
             $stmt2 = $conn->prepare($sqlUpit2);
             $stmt2->bind_param("s", $username);
             $stmt2->execute();
             $stmt2->bind_result($id);
-            while ($stmt2->fetch()) {
-                return $id;
-            }
+            $stmt2->fetch();
             $stmt2->close();
-            $conn->commit(); // Commit the transaction
+
+            $conn->commit();
             $conn->autocommit(true); // Turn autocommit back on
+
+            return $id;
         } catch (Exception $e) {
-            $conn->rollback(); // Rollback the transaction if an error occurred
+            $conn->rollback();
             $conn->autocommit(true); // Turn autocommit back on
             echo json_encode(["status" => "fail", "message" => "Грешка: " . $e->getMessage()]);
         }
@@ -1207,9 +1188,10 @@ class DBBroker {
     }
 
     public function updatePoverenik($id, $ime, $prezime, $jmbg, $adresa, $telefon, $biraliste, $email, $datum_rodj) {
-        $conn = $this->conn;
+
 
         try {
+            $conn = $this->conn;
             $conn->autocommit(false); // Početak transakcije
             //Vraćanje mejla poverenika za dati id pre ažuriranja
             $sqlUpit4 = "SELECT email FROM poverenik WHERE id = ?";
@@ -1257,12 +1239,12 @@ class DBBroker {
                 $stmt6->close();
             }
 
-            $conn->commit(); // Commit the transaction
-            $conn->autocommit(true); // Turn autocommit back on
+            $conn->commit();
+
             echo json_encode(["status" => "success", "message" => "Успешно ажуриран повереник!"]);
         } catch (Exception $e) {
-            $conn->rollback(); // Rollback the transaction if an error occurred
-            $conn->autocommit(true); // Turn autocommit back on
+            $conn->rollback();
+            $conn->autocommit(true);
             $erro = "Error: " . $e->getMessage();
             echo json_encode(["status" => "error", "message" => "Неуспешно ажурирање података!"]);
             // Log the exception details
@@ -1275,8 +1257,8 @@ class DBBroker {
     public function deletePoverenik($id) {
         try {
             $conn = $this->conn;
-            $conn->autocommit(false); // Start a transaction
-            // Fetch the email based on the given ID
+            $conn->autocommit(false); // Početak transakcije
+            // Vraćanje email-a na osnovu prosleđenog ID-a
             $stmt = $conn->prepare("SELECT email, poverenik_nivo_id FROM poverenik WHERE id = ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();
@@ -1284,27 +1266,40 @@ class DBBroker {
             $stmt->fetch();
             $stmt->close();
 
-            // Check if poverenik_nivo_id is 1 or 2
+            // Provera nivoa poverenika
             if ($poverenikNivoId == 1 || $poverenikNivoId == 2) {
                 $conn->rollback();
                 echo json_encode(["status" => "fail", "message" => "Не можете брисати поверенике нивоа Superadmin и Admin"]);
                 return;
             }
 
-            // Delete the poverenik with the given ID
+            // Brisanje poverenik_login podataka tabele na osnovu username-a
+            $sqlUpit = "DELETE FROM poverenik_login 
+                        WHERE id = (
+                            SELECT pl.id 
+                            FROM poverenik pov 
+                            INNER JOIN poverenik_login pl ON pov.poverenik_login_id = pl.id 
+                            WHERE pov.id = ?
+                        );";
+            $stmt01 = $conn->prepare($sqlUpit);
+            $stmt01->bind_param("i", $id);
+            $res01 = $stmt01->execute();
+            $stmt01->close();
+
+            // Brisanje poverenika sa prosleđenim ID-om
             $stmt0 = $conn->prepare("DELETE FROM poverenik WHERE id = ?");
             $stmt0->bind_param("i", $id);
             $res0 = $stmt0->execute();
             $stmt0->close();
 
-            // Delete from glasac if email exists
+            // Brisanje glasaca ako email postoji u tabeli glasac
             $stmt1 = $conn->prepare("DELETE FROM glasac WHERE email = ?");
             $stmt1->bind_param("s", $email);
             $res1 = $stmt1->execute();
             $stmt1->close();
 
-            // Commit or rollback based on the result
-            if ($res0 && $res1) {
+            // Commit ili rollback 
+            if ($res0 && $res01 && $res1) {
                 $conn->commit();
                 $conn->autocommit(true); // Turn autocommit back on
                 echo json_encode(["status" => "success", "message" => "Успешно избрисан повереник!"]);
@@ -1342,6 +1337,7 @@ class DBBroker {
     public function ubaciOkrugIPoverenistva($okrug, $nizPov) {
         $conn = $this->conn;
         try {
+            $okrug = $this->latinToCyrillic($okrug);
             $sqlUpit = "INSERT INTO okruzi(naziv_regiona) VALUES (?)";
             $stmt = $conn->prepare($sqlUpit);
 
@@ -1370,15 +1366,39 @@ class DBBroker {
     public function deleteOkrug($id) {
         try {
             $conn = $this->conn;
+            $conn->autocommit(false);
 
-            $sqlUpit = "DELETE FROM okruzi WHERE id = ?";
-            $stmt = $conn->prepare($sqlUpit);
-            $stmt->bind_param("i", $id);
-            $res = $stmt->execute();
-            if ($res) {
-                echo json_encode(["status" => "success", "message" => "Успешно избрисан округ!"]);
+            // Brisanje prvo unosa iz 'poverenik_login' tabele vezane za okrug sa prosleđenim ID-jem
+            $sqlUpit2 = "DELETE pl FROM poverenik_login pl
+                         INNER JOIN poverenik pov ON pl.id = pov.poverenik_login_id
+                         INNER JOIN poverenistvo p ON p.id = pov.poverenistvo_id
+                         WHERE p.okrug_id = ?";
+            $stmt2 = $conn->prepare($sqlUpit2);
+            $stmt2->bind_param("i", $id);
+            $res2 = $stmt2->execute();
+            $stmt2->close();
+
+            if ($res2) {
+
+                // Delete from 'okruzi' table
+                $sqlUpit = "DELETE FROM okruzi WHERE id = ?";
+                $stmt = $conn->prepare($sqlUpit);
+                $stmt->bind_param("i", $id);
+                $res = $stmt->execute();
+                $stmt->close();
+
+                if ($res) {
+                    // Obe transakcije brisanja su uspešne
+                    $conn->commit();
+                    echo json_encode(["status" => "success", "message" => "Uspešno obrisan okrug!"]);
+                } else {
+                    $conn->rollback();
+                    echo json_encode(["status" => "fail", "message" => "Neuspešno obrisan okrug!"]);
+                }
             } else {
-                echo json_encode(["status" => "fail", "message" => "Неуспешно брисање!"]);
+
+                $conn->rollback();
+                echo json_encode(["status" => "fail", "message" => "Neuspešno obrisani zapisi poverenik_login!"]);
             }
         } catch (Exception $e) {
             echo json_encode(["status" => "error", "message" => "Грешка: " . $e->getMessage()]);
@@ -1388,7 +1408,12 @@ class DBBroker {
 }
 
 //$test = new DBBroker();
-//$test->deleteOkrug(33);
+//$test->getNivoPovByGlasacId(55);
+//$test->checkUser("Mali Zvornik");
+//$pomVC = $test->generateVerificationCode();
+//$test->storeVerificationToken(1, $pomVC);
+//$test->deletePoverenik(32);
+//$test->deleteOkrug(35);
 //$test->ubaciOkrugIPoverenistva("Тест округ");
 //$test->slobodneOpstine();
 //$test->updatePoverenik(3, "Катарина", "Роквић", "2343234532388", "Јована Дучића 8", "3532888", "Дом омладине 8", "dusko8.drljaca@consultech.rs", "02/07/1998");
@@ -1396,25 +1421,22 @@ class DBBroker {
 //$test->loadTablePov();
 //$test->poverenistvaByOkrug("Подрињски");
 //$test->loadOkrug();
-//echo $test->createPoverenikLogin("Kanjiža", "Južnobački", 4);
-//$test->insertPoverenik("Каћа", "Дрљача", "2343234532399", "Јована Дучића 7", "3532999", "Дом омладине2", "dusko.drljaca@consultech.rs", "02/07/1994", 4, "Бор", "Borski");
+//echo $test->createPoverenikLogin("Mali Zvornik", "Podrinjski", 3);
+//$test->insertPoverenik("Каћа", "Дрљача", "2343234532399", "Јована Дучића 7", "3532999", "Дом омладине2", "dusko.drljaca@consultech.rs", "02/07/1994", 3, "Мали Зворник", "Podrinjski");
 //$test->deleteGlasac(17);
-//$test->existEmail("superadmin");
-//$test->checkAndInsertEmail("contact@ddwebapps.com", "superadmin");
-//$test->checkUsernameEmail("superadmin", "contact1@ddwebapps.com");
+//$test->checkEmailByUsername("contact@ddwebapps.com", "superadmin");
 //$test->updatePassword("superadmin", "superadmin");
-//$test->getUserIdByToken("99e9908a93446bc4a0401d4c330264b8051386201da31d9e198d9e07e4a6f1df");
-//$test->checkUser("admin");
-//$test->getUserLoginId("oo_MaliZvornik");
-//$test->updateGlasac('Božana', "Ilić", "2345234523452", "Izmenja adresa", "9944", "Centar 2", "bozana.ilic@yahoo.com",
-//        '04/04/1995', 1, "", "Мали Зворник");
+//$test->checkUser("Mali Zvornik");
+//$test->getUserLoginId("Mali Zvornik");
+//$test->updateGlasac(57, 'Božana', "Ilić", "2345234523452", "Izmenja adresa", "9944", "Centar 2", "bozana.ilic@yahoo.com",
+//        '04/04/1995', 1, "", "Витина");
 //$test->getOpstineNosilacIme('Лозница');
 //$test->getGlasacById(5);
 //$test->getImeNosioca('Крупањ');
 //$test->ucitaјNosioceTip();
 //$test->loadTable();
 //$test->checkEmail("dusko.drljaca@consultech.rs");
-//$test->insertGlasac();
+//$test->insertGlasac("Žarko", "Pantelić", "", "Nikole Tesle 5", "346236", "Mesna zajednica", "dusko.drljaca@consultech.rs", "21/05/1924", 1, "", "Вучитрн");
 //$test->checkNosioce('Ада');
 //$test->loadTowns();
 //$test->checkTelefon("7778885");

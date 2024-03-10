@@ -10,7 +10,7 @@ include './header.php';
 
     <h6 class="pl-4 title-color ">Добродошли, <?php echo $_SESSION['username']; ?>!</h6>
     <hr class="border border-primary form_separator">
-    <div class="navigacija">
+    <div class="navigacija">        
         <h5 class="link-color"><a href="../controllers/logout.php">Одјавите се</a></h5>
         <hr class="border border-primary form_separator"> 
     </div>    

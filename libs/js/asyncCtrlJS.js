@@ -68,7 +68,6 @@ const proveriEmail = async () => {
         });
 
         const fetchData = await response.json();
-        console.log(fetchData);
 
         const msg = document.getElementById("messageEmail");
         const msgInsertEmail = document.getElementById("messageInsertEmail");
@@ -421,7 +420,7 @@ if (unosForm) {
             });
 
             const fetchData = await response.json();
-
+            console.log(fetchData);
             const messageUnos = document.getElementById('messageUnos');
             if (fetchData.status === "uspesno") {
                 messageUnos.innerHTML = fetchData.message;
@@ -528,8 +527,8 @@ const editRow = async (button) => {
         body: JSON.stringify(requestBody)
     });
     const fetchData = await response.json();
+
     const fetchNiz = fetchData.niz;
-    console.log(fetchNiz);
     const editId = document.getElementById('idModal');
     editId.value = id;
     // Popunjavanje polja u modalu sa podacima 
@@ -549,6 +548,8 @@ const editRow = async (button) => {
     editAdresa.value = fetchNiz.adresa;
     const editBiraliste = document.getElementById('biralisteModal');
     editBiraliste.value = fetchNiz.biraliste;
+
+
 
     //Poverenistva
     const poverenistva = document.getElementById('mestoModal');
@@ -602,7 +603,7 @@ const ucitajTabelu = async () => {
 
 
         const fetchData = await response.json();
-
+        console.log(fetchData);
         const opstine_tab = document.getElementById('opstine_tab');
         const tabela_glasaca = document.getElementById('tabela_glasaca');
         const tabela_glasaca_body = document.getElementById('tabela_glasaca_body');
@@ -685,7 +686,7 @@ const ucitajTabelu = async () => {
             const rows = tabela_glasaca_body.querySelectorAll("tr");
 
             rows.forEach((row, index) => {
-                const indexCell = row.querySelector("td:first-child");
+                const indexCell = row.querySelector("td:nth-child(2)");
                 indexCell.textContent = index + 1;
             });
         };
@@ -938,10 +939,13 @@ if (form) {
         event.preventDefault();
         const form = event.target;
         const formData = new FormData(form);
+        const opstinaSelect = document.getElementById("mestoModal"); 
+        let selectedOption = opstinaSelect.selectedOptions[0]; // Selected option
+        let opstinaText = selectedOption.textContent;
         const requestBody = {
             action: 'updateGlasac',
             sendData: {
-                id: formData.get("idModal"),
+                id: parseInt(formData.get("idModal")),
                 ime: formData.get("imeModal"),
                 prezime: formData.get("prezimeModal"),
                 email: formData.get("emailModal"),
@@ -950,7 +954,7 @@ if (form) {
                 telefon: formData.get("telefonModal"),
                 adresa: formData.get("adresaModal"),
                 biraliste: formData.get("biralisteModal"),
-                opstina: formData.get("opstinaModal"),
+                opstina: opstinaText,
                 nosilac_glasova: formData.get("nosilac_glasovaModal"),
                 ime_nosioca_glasova: formData.get("ime_nosioca_glasovaModal")
             }
@@ -1001,9 +1005,8 @@ if (form) {
 
 /***Reset Password***/
 
+//Provera da li postoji username. Ako postoji pojavljuje se modal za proveravu da li ima email za dato korisničko ime. 
 
-//Provera da li postoji username. Ako postoji proverava se da li ima email za dato korisničko ime. Ako nema pojavljuje se 
-//drugi modal za Email, a ako ima vezan mejl za korisničko ime onda se pojavljuje prvi modal za unos.
 const verifyUsernameBtn = document.getElementById('verifyUsernameBtn');
 const usernameInput = document.getElementById('usernameInput');
 
@@ -1030,33 +1033,14 @@ if (verifyUsernameBtn) {
                 throw new Error('Network response was not ok');
             }
 
-            const data = await response.json();
-            if (data.status === "success") {
-                const emailRequestBody = {
-                    action: 'existEmail'
-                };
-                const emailResponse = await fetch(url, {
-                    method: 'POST',
-                    body: JSON.stringify(emailRequestBody),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                const fetchData2 = await emailResponse.json();
-                console.log(fetchData2);
-                if (fetchData2.status === "existing") {
-                    // Email exists in the database, prikazati prvi modal za Email
-                    $('#usernameVerificationModal').modal('hide');
-                    $('#forgotPasswordModal').modal('show');
-                } else {
-                    // Email dosn't exist in the database, prikazati drugi modal za Email                   
-                    $('#usernameVerificationModal').modal('hide');
-                    $('#emailInsertModal').modal('show');
-                }
+            const fetchData = await response.json();
+            if (fetchData.status === "success") {
+                // Email exists in the database, prikazati prvi modal za Email
+                $('#usernameVerificationModal').modal('hide');
+                $('#forgotPasswordModal').modal('show');
             } else {
                 const checkUsernameMessage = document.getElementById("checkUsernameMessage");
-                checkUsernameMessage.innerHTML = data.message;
+                checkUsernameMessage.innerHTML = fetchData.message;
                 setTimeout(() => {
                     checkUsernameMessage.innerHTML = '';
                 }, 3000);
@@ -1067,44 +1051,6 @@ if (verifyUsernameBtn) {
     });
 }
 
-const emailInsertBtn = document.getElementById("emailInsertBtn");
-if (emailInsertBtn) {
-    emailInsertBtn.addEventListener('click', async() => {
-        const email = document.getElementById("emailInsert").value;
-
-        const emailVerif = document.getElementById('emailInput');
-        const url = '/controllers/resetPassCtrl/ResetPassCtrl.php';
-
-        const requestBody = {
-            action: 'insertEmail',
-            sendData: {
-                email: email
-            }
-        };
-
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        });
-
-        const fetchData = await response.json();
-        if (fetchData.status === "existing") {
-            $('#emailInsertModal').modal('hide');
-            $('#forgotPasswordModal').modal('show');
-            emailVerif.value = email;
-            emailVerif.disabled = true;
-        } else {
-            const messageInsertEmail = document.getElementById("messageInsertEmail");
-            messageInsertEmail.innerHTML = fetchData.message;
-            setTimeout(() => {
-                messageInsertEmail.innerHTML = '';
-            }, 3000);
-        }
-    });
-}
 
 const sendVerificationBtn = document.getElementById('sendVerificationBtn');
 if (sendVerificationBtn) {
@@ -1343,7 +1289,7 @@ if (submitPoverenik) {
             });
 
             const fetchData = await response.json();
-
+            console.log(fetchData);
             const messageUnos = document.getElementById('messagePoverenikUnos');
             messageUnos.innerText = fetchData.message;
             if (fetchData.status === "uspesno") {
@@ -1463,7 +1409,7 @@ const ucitajTabeluPov = async () => {
             const rows = tabela_pov_body.querySelectorAll("tr");
 
             rows.forEach((row, index) => {
-                const indexCell = row.querySelector("td:first-child");
+                const indexCell = row.querySelector("td:nth-child(2)");
                 indexCell.textContent = index + 1;
             });
         };
@@ -1599,9 +1545,9 @@ if (editPovForm) {
                 },
                 body: JSON.stringify(requestBody)
             });
-            console.log(requestBody);
+            
             const fetchData = await response.json();
-
+            console.log(fetchData);
             if (fetchData.status === 'success') {
                 ucitajTabeluPov();
                 $('#editModal').modal('hide');
@@ -1619,13 +1565,13 @@ const deleteRowPov = async (button) => {
     const firstCell = row.querySelector('td:first-child');
     const id = firstCell.textContent;
 
-    if (id !== '1' && id !== '2') {        
-        if (window.confirm('Да ли желите да избришете ове податке?')) {           
+    if (id !== '1' && id !== '2') {
+        if (window.confirm('Да ли желите да избришете ове податке?')) {
             await deletePoverenik(id);
-            row.remove(); 
+            row.remove();
             ucitajTabeluPov();
         }
-    } else {        
+    } else {
         alert('Не можете брисати налог нивоа Superadmin или Admin');
     }
 };
@@ -1769,7 +1715,7 @@ if (selectElement) {
 
             setTimeout(() => {
                 showMessage("");
-            }, 4000);
+            }, 3000);
         }
     });
 
@@ -1798,14 +1744,13 @@ if (selectElement) {
 
             const fetchData = await response.json();
             if (fetchData.status === 'success') {
-                // Show green success message
                 showMessage(fetchData.message, 'green');
-                // Optionally, you can delay the form submission or take other actions
+
                 setTimeout(() => {
                     formElement.submit();
-                }, 2000); // 2 seconds delay as an example
+                }, 1000);
+
             } else {
-                // Show red error message
                 showMessage(fetchData.message, 'red');
             }
 

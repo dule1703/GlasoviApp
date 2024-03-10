@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Set the inactivity timeout duration (in seconds)
-$inactivityTimeout = 600;
+$inactivityTimeout = 900;
 
 // Check if the last activity timestamp exists in the session
 if (isset($_SESSION['last_activity'])) {

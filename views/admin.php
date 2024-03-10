@@ -16,7 +16,7 @@ include './header.php';
     <h6 class="pl-4 title-color ">Добродошли, <?php echo $_SESSION['username']; ?>!</h6>
     <hr class="border border-primary form_separator">
     <div class="navigacija">
-        <h5 class="link-color"><a href="form.php">Страница форме</a></h5>
+        <h5 class="link-color"><a href="form.php">Унос гласача</a></h5>
         <h5 class="link-color"><a href="../controllers/logout.php">Одјавите се</a></h5>
         <hr class="border border-primary form_separator"> 
     </div>    

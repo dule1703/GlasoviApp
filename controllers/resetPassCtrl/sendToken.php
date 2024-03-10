@@ -5,9 +5,11 @@ error_reporting(E_ALL);
 
 require_once '../../dbbroker/DBBroker.php';
 
-// Verify the token when the user clicks the verification link
+// Verifikacija tokena kada korisnik klikne na link za verifikaciju
 if (isset($_GET['token'])) {
     $token = $_GET['token'];
+    $_SESSION["checkUser"] = str_replace('+', ' ', $_GET['username']);
+    
     $newDBB = new DBBroker();
     // Check if the token exists and is valid in the database
     $isValidToken = $newDBB->validateVerificationToken($token);
@@ -69,7 +71,7 @@ if (isset($_GET['token'])) {
         exit;
     }
 }
-// Invalid or expired token, display an error message or redirect to an error page
+//Pogrešan ili istekao token, prikazuje se tekst greške
 ?>
 <!DOCTYPE html>
 

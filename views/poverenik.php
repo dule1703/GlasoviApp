@@ -17,6 +17,7 @@ include './header.php';
     <hr class="border border-primary form_separator">
     <div class="navigacija">
         <h5 class="link-color"><a href="admin.php">Администрација</a></h5>
+        <h5 class="link-color"><a href="form.php">Унос гласача</a></h5>
         <h5 class="link-color"><a href="../controllers/logout.php">Одјавите се</a></h5>
         <hr class="border border-primary form_separator"> 
     </div>    

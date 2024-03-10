@@ -11,7 +11,7 @@ include './header.php';
     <h6 class="title-color">Добродошли, <?php echo $_SESSION['username']; ?>!</h6>
     <hr class="border border-primary form_separator">
     <div class="navigacija">  
-        <h5 class="link-color"><a href="form.php">Страница форме</a></h5>
+        <h5 class="link-color"><a href="form.php">Унос гласача</a></h5>
         <h5 class="link-color"><a href="../controllers/logout.php">Одјавите се</a></h5>            
         <hr class="border border-primary form_separator">             
     </div>
@@ -170,7 +170,7 @@ include './header.php';
                                                 <label class="title-color" for="nosilac_glasovaModal">Носилац гласова:</label>
                                             </div>
                                             <div class="col-lg-8 col-sm-8">
-                                                <select id="nosilac_glasovaModal" name="nosilac_glasovaModal" class="form-control form_data mt-2" onclick="removeDuplicateOptions(this)">                                                                                                                     
+                                                <select id="nosilac_glasovaModal" name="nosilac_glasovaModal" class="form-control form_data mt-2" onclick="removeDuplicateOptions(this)" >                                                                                                                     
                                                 </select>
                                             </div>
                                         </div>      

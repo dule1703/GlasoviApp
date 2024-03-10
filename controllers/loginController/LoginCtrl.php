@@ -8,8 +8,6 @@ error_reporting(E_ALL);
 require_once '../../dbbroker/DBBroker.php';
 require_once '../../model/UserLogin.php';
 
-   //$json = file_get_contents("php://input"); // json string
-   // $data = json_decode($json); // php object
 $data = json_decode(file_get_contents('php://input'));
 class LoginCtrl{
     public function checkLogin($data){
